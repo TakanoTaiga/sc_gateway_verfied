@@ -14,30 +14,24 @@
 
 use std::{fmt::{Display , Formatter}, net::SocketAddr};
 
-
 pub enum NodeConnectionKey {
-    SearchNode,
+    SearchApp,
     PingRequest,
+    SearchAppResponse,
     PingResponse,
-    IpResponse,
-    NodeInfoRequest,
-    NodeInfoResponse,
-    GamepadValueRequest,
+    GamepadValue,
     UnknownKey,
-    MissingKey
 }
 
 impl Display for NodeConnectionKey {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<() , std::fmt::Error> {
         match self {
-            NodeConnectionKey::SearchNode => write!(f , "NC::SearchNode"),
-            NodeConnectionKey::PingRequest => write!(f , "NC::PingRequest"),
-            NodeConnectionKey::PingResponse => write!(f , "NC::PingResponse"),
-            NodeConnectionKey::IpResponse => write!(f , "NC::IpResponse"),
-            NodeConnectionKey::NodeInfoRequest => write!(f , "NC::NodeInfoRequest"),
-            NodeConnectionKey::NodeInfoResponse => write!(f , "NC::NodeInfoResponse"),
-            NodeConnectionKey::GamepadValueRequest => write!(f , "NC::GamepadValueRequest"),
-            _ => write!(f , "NC::Unknown Key"),
+            NodeConnectionKey::SearchApp => write!(f , "SearchApp"),
+            NodeConnectionKey::PingRequest => write!(f , "PingRequest"),
+            NodeConnectionKey::SearchAppResponse => write!(f , "SearchAppResponse"),
+            NodeConnectionKey::PingResponse => write!(f , "PingResponse"),
+            NodeConnectionKey::GamepadValue => write!(f , "GamepadValue"),
+            _ => write!(f , "Unknown Key"),
         }
     }
 }
@@ -48,13 +42,11 @@ pub trait EnumKeyUtil {
 impl EnumKeyUtil for NodeConnectionKey {
     fn convert_to_u8key(&self)->u8{
         match self {
-            NodeConnectionKey::SearchNode => 47,
-            NodeConnectionKey::PingRequest => 98,
-            NodeConnectionKey::PingResponse => 87,
-            NodeConnectionKey::IpResponse => 75,
-            NodeConnectionKey::NodeInfoRequest => 23,
-            NodeConnectionKey::NodeInfoResponse => 25,
-            NodeConnectionKey::GamepadValueRequest => 12,
+            NodeConnectionKey::SearchApp => 0xC9,
+            NodeConnectionKey::PingRequest => 0xCA,
+            NodeConnectionKey::SearchAppResponse => 0xCB,
+            NodeConnectionKey::PingResponse => 0xCC,
+            NodeConnectionKey::GamepadValue => 0xCD,
             _ => 0,
         }
     }
@@ -66,13 +58,10 @@ pub trait U8KeyUtil {
 impl U8KeyUtil for u8 {
     fn convert_to_enumkey(&self) -> NodeConnectionKey{
         match self {
-            47 => NodeConnectionKey::SearchNode,
-            98 => NodeConnectionKey::PingRequest,
-            87 => NodeConnectionKey::PingResponse,
-            75 => NodeConnectionKey::IpResponse,
-            23 => NodeConnectionKey::NodeInfoRequest,
-            25 => NodeConnectionKey::NodeInfoResponse,
-            12 => NodeConnectionKey::GamepadValueRequest,
+            0xC9 => NodeConnectionKey::SearchApp,
+            0xCA => NodeConnectionKey::PingRequest,
+            0xCB => NodeConnectionKey::SearchAppResponse,
+            0xCC => NodeConnectionKey::PingResponse,
             _ => NodeConnectionKey::UnknownKey,
         }
     }
