@@ -19,7 +19,7 @@ pub enum NodeConnectionKey {
     PingRequest,
     SearchAppResponse,
     PingResponse,
-    GamepadValue,
+    DataValue,
     UnknownKey,
 }
 
@@ -30,7 +30,7 @@ impl Display for NodeConnectionKey {
             NodeConnectionKey::PingRequest => write!(f , "PingRequest"),
             NodeConnectionKey::SearchAppResponse => write!(f , "SearchAppResponse"),
             NodeConnectionKey::PingResponse => write!(f , "PingResponse"),
-            NodeConnectionKey::GamepadValue => write!(f , "GamepadValue"),
+            NodeConnectionKey::DataValue => write!(f , "DataValue"),
             _ => write!(f , "Unknown Key"),
         }
     }
@@ -46,7 +46,7 @@ impl EnumKeyUtil for NodeConnectionKey {
             NodeConnectionKey::PingRequest => 0xCA,
             NodeConnectionKey::SearchAppResponse => 0xCB,
             NodeConnectionKey::PingResponse => 0xCC,
-            NodeConnectionKey::GamepadValue => 0xCD,
+            NodeConnectionKey::DataValue => 0xCD,
             _ => 0,
         }
     }
@@ -62,6 +62,7 @@ impl U8KeyUtil for u8 {
             0xCA => NodeConnectionKey::PingRequest,
             0xCB => NodeConnectionKey::SearchAppResponse,
             0xCC => NodeConnectionKey::PingResponse,
+            0xCD => NodeConnectionKey::DataValue,
             _ => NodeConnectionKey::UnknownKey,
         }
     }
